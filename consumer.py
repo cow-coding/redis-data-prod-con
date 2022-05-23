@@ -36,8 +36,9 @@ if __name__ == '__main__':
 
     with open("awesome_link.yaml") as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
-
-    q = RedisQueue("final_project", host="35.216.103.242", port=6379, db=0, decode_responses=True)
+        
+    cloud_info = settings["cloud_info"]
+    q = RedisQueue("final_project", host=cloud_info["host"], port=6379, db=0, decode_responses=True)
     db_profile = settings["db_profile"]
 
     conn = db_connect(**db_profile)
