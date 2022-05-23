@@ -52,7 +52,7 @@ if __name__ == '__main__':
             print()
 
             batch_list.append(msg)
-            time.sleep(4)
+            time.sleep(3)
 
 
 
