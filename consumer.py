@@ -38,6 +38,8 @@ if __name__ == '__main__':
     batch_list = []
 
     schedule.every(15).minutes.do(insert_data, batch_list, conn)
+    
+    print("Consumer Start!")
 
     while True:
         schedule.run_pending()
