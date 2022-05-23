@@ -32,7 +32,7 @@ if __name__ == '__main__':
     db_profile = settings["db_profile"]
 
     conn = db_connect(**db_profile)
-    conn = conn["test"]
+    conn = conn["repository"]
 
     BATCH_SIZE = 15
     batch_list = []
@@ -52,7 +52,7 @@ if __name__ == '__main__':
             print()
 
             batch_list.append(msg)
-            time.sleep(2)
+            time.sleep(4)
 
 
 

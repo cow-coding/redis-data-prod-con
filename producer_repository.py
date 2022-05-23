@@ -17,7 +17,7 @@ from redisqueue import RedisQueue
 def get_awesome_repo_list(url, lang, types):
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) "
                              "Chrome/84.0.4147.89 Safari/537.36"}
-    res = requests.get(url, headers)
+    res = requests.get(url, headers=headers)
 
     categories = list(filter(None, re.split(r"#{2,}", res.text)))
     ret_list = []
@@ -51,7 +51,7 @@ def get_awesome_repo_list(url, lang, types):
 def get_repository_infos(login, repo_name, headers):
     base_url = f"https://api.github.com/repos/{login}/{repo_name}"
 
-    res = requests.get(base_url, headers)
+    res = requests.get(base_url, headers=headers)
     res.raise_for_status()
 
     data = res.json()
@@ -62,7 +62,7 @@ def get_repository_infos(login, repo_name, headers):
 def get_language_list(login, repo_name, headers):
     base_url = f"https://api.github.com/repos/{login}/{repo_name}/languages"
 
-    res = requests.get(base_url, headers)
+    res = requests.get(base_url, headers=headers)
     res.raise_for_status()
 
     data = res.json()
