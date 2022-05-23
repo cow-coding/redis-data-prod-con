@@ -21,13 +21,8 @@ def db_connect(user, passwd, database, **kwargs):
 
 
 def insert_data(conn):
-    try:
-        if len(batch_list) > 0:
-            conn.insert_many(batch_list)
-            print("insert the batch data")
-            batch_list.clear()
-    except pymongo.errors.BulkWriteError as bwe:
-        conn.insert_many(batch_data)
+    if len(batch_list) > 0:
+        conn.insert_many(batch_list)
         print("insert the batch data")
         batch_list.clear()
 
