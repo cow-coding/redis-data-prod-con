@@ -2,7 +2,7 @@
 
 ## requirements
 
-```
+```.sh
 pip install -r requirements.txt
 ```
 
@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ### `consumer.py`
 
-```
+```.sh
 python consumer.py --time_interval [time]
 ```
 
@@ -23,7 +23,7 @@ python consumer.py --time_interval [time]
 
 ### `producer-xxxxx.py`
 
-```
+```.sh
 python producer-xxxxx.py --data_path [path] --token_idx [idx]
 ```
 
@@ -33,7 +33,7 @@ python producer-xxxxx.py --data_path [path] --token_idx [idx]
 
 ## Setting files
 
-```
+```.yaml
 data_profile:
   links:
     - https://raw.githubusercontent.com/denolib/awesome-deno/main/README.md
