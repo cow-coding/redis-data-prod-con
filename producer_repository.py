@@ -102,6 +102,7 @@ if __name__ == '__main__':
         repo_list.extend(data)
 
     exist_list = []
+    token_loop = 0
     repo_idx = 0
 
     print("Now get basic information...")
@@ -130,9 +131,17 @@ if __name__ == '__main__':
         except requests.exceptions.HTTPError as httperr:
             if httperr.response.status_code == 403:
                 # wait token
-                print("Wait token reset")
+                if token_loop == 4: 
+                    print("Wait token reset")
+                    token_loop = 0
+                    time.sleep(60 * 60)
+                else:
+                    token_idx += 1
+                    token_idx = token_idx % len(token_list)
+                    token = token_list[token_idx]
+                    headers["Authorization"] = "token " + token
+                    token_loop += 1
 
-                time.sleep(60 * 60)
             elif httperr.response.status_code == 404:
                 repo_idx += 1
 
