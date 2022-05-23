@@ -20,10 +20,16 @@ def db_connect(user, passwd, database, **kwargs):
     return conn["final_project"]
 
 
-def insert_data(batch_data, conn):
-    if len(batch_data) > 0:
+def insert_data(conn):
+    try:
+        if len(batch_list) > 0:
+            conn.insert_many(batch_list)
+            print("insert the batch data")
+            batch_list.clear()
+    except pymongo.errors.BulkWriteError as bwe:
         conn.insert_many(batch_data)
         print("insert the batch data")
+        batch_list.clear()
 
 
 if __name__ == '__main__':
@@ -42,9 +48,10 @@ if __name__ == '__main__':
     conn = db_connect(**db_profile)
     conn = conn["repository"]
 
+    global batch_list
     batch_list = []
 
-    schedule.every(args.time_interval).minutes.do(insert_data, batch_list, conn)
+    schedule.every(args.time_interval).minutes.do(insert_data, conn)
     
     print("Consumer Start!")
 

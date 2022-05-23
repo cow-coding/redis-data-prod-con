@@ -101,7 +101,7 @@ if __name__ == '__main__':
         data = get_awesome_repo_list(link, category, types)
         repo_list.extend(data)
 
-    rm_list = []
+    exist_list = []
     repo_idx = 0
 
     print("Now get basic information...")
@@ -121,9 +121,11 @@ if __name__ == '__main__':
             repo["languages"] = lang
 
             repo_idx += 1
-
-            insert_data = json.dumps(repo)
-            q.put(insert_data)
+            
+            if repo["rid"] not in exist_list:
+                insert_data = json.dumps(repo)
+                exist_list.append(repo["rid"])
+                q.put(insert_data)
 
         except requests.exceptions.HTTPError as httperr:
             if httperr.response.status_code == 403:
