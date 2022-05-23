@@ -57,7 +57,7 @@ def get_repository_infos(login, repo_name, headers):
     data = res.json()
     pages = 400 if data["stargazers_count"] // 100 + 1 > 400 else data["stargazers_count"] // 100 + 1
 
-    return pages, data["id"], data["owner"]["id"], data["stargazers_count"], datetime.strptime(data["updated_at"], "%Y-%m-%dT%H:%M:%SZ"), data["topics"]
+    return pages, data["id"], data["owner"]["id"], data["stargazers_count"], data["updated_at"], data["topics"]
 
 def get_language_list(login, repo_name, headers):
     base_url = f"https://api.github.com/repos/{login}/{repo_name}/languages"
