@@ -29,7 +29,7 @@ def insert_data(batch_data, conn):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--time_interval", default=9)
+    parser.add_argument("--time_interval", type=int, default=9)
 
     args = parser.parse_args()
 
