@@ -2,6 +2,8 @@ import os
 import json
 import time
 
+import argparse
+
 import yaml
 import schedule
 
@@ -25,6 +27,12 @@ def insert_data(batch_data, conn):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--time_interval", default=9)
+
+    args = parser.parse_args()
+
     with open("awesome_link.yaml") as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -34,10 +42,9 @@ if __name__ == '__main__':
     conn = db_connect(**db_profile)
     conn = conn["repository"]
 
-    BATCH_SIZE = 15
     batch_list = []
 
-    schedule.every(15).minutes.do(insert_data, batch_list, conn)
+    schedule.every(args.time_interval).minutes.do(insert_data, batch_list, conn)
     
     print("Consumer Start!")
 
