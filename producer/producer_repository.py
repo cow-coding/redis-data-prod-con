@@ -75,10 +75,7 @@ if __name__ == '__main__':
 
     load_dotenv(verbose=True)
 
-    parser.add_argument("--dummy", type=lambda x: strtobool(x), default=True, help="Whether dummy or not")
-    parser.add_argument("--data_path", type=str, default=os.getenv("DATA_PATH"), help="Data Save path")
     parser.add_argument("--token_idx", type=int, default=0)
-    parser.add_argument("--sep", type=str, default="###")
 
     args = parser.parse_args()
 

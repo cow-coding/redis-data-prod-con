@@ -31,6 +31,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--time_interval", type=int, default=9)
+    parser.add_argument("--collection", type=str, default="test")
 
     args = parser.parse_args()
 
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     db_profile = settings["db_profile"]
 
     conn = db_connect(**db_profile)
-    conn = conn["repository"]
+    conn = conn[args.collection]
 
     global batch_list
     batch_list = []
