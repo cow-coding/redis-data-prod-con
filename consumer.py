@@ -37,9 +37,10 @@ if __name__ == '__main__':
     BATCH_SIZE = 15
     batch_list = []
 
-    schedule.every(15).minute.do(insert_data, batch_list, conn)
+    schedule.every(15).minutes.do(insert_data, batch_list, conn)
 
     while True:
+        schedule.run_pending()
         msg = q.get(isBlocking=True)
 
         if msg is not None:

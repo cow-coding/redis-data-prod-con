@@ -2,7 +2,6 @@ import json
 import os
 import re
 import time
-from pprint import pprint
 from datetime import datetime
 
 import yaml
@@ -11,9 +10,6 @@ from distutils.util import strtobool
 
 import requests
 from dotenv import load_dotenv
-
-import pandas as pd
-from tqdm import tqdm
 
 from redisqueue import RedisQueue
 
