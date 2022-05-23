@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
             repo_idx += 1
 
-            insert_data = json.dump(repo)
+            insert_data = json.dumps(repo)
             q.put(insert_data)
 
         except requests.exceptions.HTTPError as httperr:
