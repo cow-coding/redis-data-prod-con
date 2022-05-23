@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     while True:
         schedule.run_pending()
-        msg = q.get(isBlocking=True)
+        msg = q.get(isBlocking=False)
 
         if msg is not None:
             msg = json.loads(msg)
