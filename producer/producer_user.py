@@ -81,7 +81,10 @@ if __name__ == '__main__':
     url_idx = 0
     uid_list = []
     data_dict = dict()
-    insert_dict = dict()
+    insert_dict = {
+        "uid": 0,
+        "login": "login_tmp"
+    }
     update_dict = dict()
 
     while url_idx < len(url_list):
