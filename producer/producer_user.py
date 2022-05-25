@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    with open("../" + os.getenv("SETTINGS")) as f:
+    with open(os.getenv("SETTINGS")) as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
 
     token_list = settings["token"]
