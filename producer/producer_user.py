@@ -1,6 +1,6 @@
 import json
 import os, sys
-sys.path.appedn(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import re
 import time
 from datetime import datetime
@@ -87,13 +87,13 @@ if __name__ == '__main__':
             data = get_repo_user_list(url, headers)
             
             for user in data:
-                if user["uid"] in uid_list: continue
+                if user["id"] in uid_list: continue
 
-                user_dict["uid"] = user["uid"]
+                user_dict["uid"] = user["id"]
                 user_dict["login"] = user["login"]
 
-                insert_data = json.dumps(user)
-                uid_list.append(data["uid"])
+                insert_data = json.dumps(user_dict)
+                uid_list.append(data["id"])
                 q.put(insert_data)
 
             url_idx += 1
