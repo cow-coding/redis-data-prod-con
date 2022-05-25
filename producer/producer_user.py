@@ -1,5 +1,6 @@
 import json
-import os
+import os, sys
+sys.path.appedn(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import re
 import time
 from datetime import datetime
@@ -14,9 +15,6 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 
 from redisqueue import RedisQueue
-
-from concurrent.futures import ThreadPoolExecutor
-from functools import partial
 
 
 def db_connect(user, passwd, database, **kwargs):
@@ -45,7 +43,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    with open(os.getenv("SETTINGS")) as f:
+    with open("../"+os.getenv("SETTINGS")) as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
 
     token_list = settings["token"]
@@ -87,12 +85,14 @@ if __name__ == '__main__':
 
         try:
             data = get_repo_user_list(url, headers)
+            
+            for user in data:
+                if user["uid"] in uid_list: continue
 
-            user_dict["uid"] = data["uid"]
-            user_dict["login"] = data["login"]
+                user_dict["uid"] = user["uid"]
+                user_dict["login"] = user["login"]
 
-            if data["uid"] not in uid_list:
-                insert_data = json.dumps(user_dict)
+                insert_data = json.dumps(user)
                 uid_list.append(data["uid"])
                 q.put(insert_data)
 
