@@ -93,7 +93,7 @@ if __name__ == '__main__':
                 user_dict["login"] = user["login"]
 
                 insert_data = json.dumps(user_dict)
-                uid_list.append(data["id"])
+                uid_list.append(user["id"])
                 q.put(insert_data)
 
             url_idx += 1
