@@ -90,17 +90,17 @@ if __name__ == '__main__':
             data = get_repo_user_list(url, headers)
             
             for user in data:
-				update_dict["rid"] = rid
-				update_dict["uid"] = user["id"]
+		update_dict["rid"] = rid
+		update_dict["uid"] = user["id"]
 				
-				if user["id"] not in uid_list:
-					insert_dict["uid"] = user["id"]
-					insert_dict["login"] = user["login"]
-				else:
-					insert_dict = None
+		if user["id"] not in uid_list:
+		    insert_dict["uid"] = user["id"]
+		    insert_dict["login"] = user["login"]
+		else:
+		    insert_dict = None
 
-				data_dict["update"] = update_dict
-				data_dict["insert"] = insert_dict
+		    data_dict["update"] = update_dict
+		    data_dict["insert"] = insert_dict
 
                 insert_data = json.dumps(user_dict)
                 uid_list.append(user["id"])
