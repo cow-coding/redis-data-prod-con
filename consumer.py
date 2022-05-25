@@ -67,8 +67,8 @@ if __name__ == '__main__':
                 uid = update_data["uid"]
                 conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
 
-            if insert is not None:
-                batch_list.append(msg)
+            if not insert:
+                batch_list.append(insert)
 
             print(msg)
             print()

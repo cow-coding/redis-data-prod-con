@@ -81,10 +81,7 @@ if __name__ == '__main__':
     url_idx = 0
     uid_list = []
     data_dict = dict()
-    insert_dict = {
-        "uid": 0,
-        "login": "login_tmp"
-    }
+    insert_dict = dict()
     update_dict = dict()
 
     while url_idx < len(url_list):
@@ -102,7 +99,7 @@ if __name__ == '__main__':
                     insert_dict["login"] = user["login"]
                     uid_list.append(user["id"])
                 else:
-                    insert_dict = None
+                    insert_dict = dict()
 
                 data_dict["insert"] = insert_dict
                 data_dict["update"] = update_dict
