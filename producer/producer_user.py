@@ -67,30 +67,40 @@ if __name__ == '__main__':
     url_list = []
 
     for repo in repo_list:
+		rid = repo["rid"]
         login = repo["login"]
         repo_name = repo["repo_name"]
         star_pages = 10 if repo["star_pages"] > 10 else repo["star_pages"]
 
         base_url = f"https://api.github.com/repos/{login}/{repo_name}/stargazers?per_page=100&page="
-        tmp_url = [base_url + str(page) for page in range(1, star_pages + 1)]
+        tmp_url = [(rid, base_url + str(page)) for page in range(1, star_pages + 1)]
 
         url_list.extend(tmp_url)
 
     url_idx = 0
     uid_list = []
     user_dict = dict()
+	insert_dict = dict()
+	update_dict = dict()
 
     while url_idx < len(url_list):
-        url = url_list[url_idx]
+        rid, url = url_list[url_idx]
 
         try:
             data = get_repo_user_list(url, headers)
             
             for user in data:
-                if user["id"] in uid_list: continue
+				update_dict["rid"] = rid
+				update_dict["uid"] = user["id"]
+				
+				if user["id"] not in uid_list:
+					insert_dict["uid"] = user["id"]
+					insert_dict["login"] = user["login"]
+				else:
+					insert_dict = None
 
-                user_dict["uid"] = user["id"]
-                user_dict["login"] = user["login"]
+				data_dict["update"] = update_dict
+				data_dict["insert"] = insert_dict
 
                 insert_data = json.dumps(user_dict)
                 uid_list.append(user["id"])
