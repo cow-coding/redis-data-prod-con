@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     with open("awesome_link.yaml") as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
-        
+
     cloud_info = settings["cloud_info"]
     q = RedisQueue("final_project", host=cloud_info["host"], port=6379, db=0, decode_responses=True)
     db_profile = settings["db_profile"]
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     batch_list = []
 
     schedule.every(args.time_interval).minutes.do(insert_data, conn)
-    
+
     print("Consumer Start!")
 
     while True:
@@ -59,20 +59,21 @@ if __name__ == '__main__':
 
         if msg is not None:
             msg = json.loads(msg)
-	    insert_data = msg["insert"]
-	    update_data = msg["update"]
-			
-	    if "update" in msg:
-		rid = update_data["rid"]
-		uid = update_data["uid"]
-		conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
-			
+            insert = msg["insert"]
+
+            if "update" in msg:
+                update_data = msg["update"]
+                rid = update_data["rid"]
+                uid = update_data["uid"]
+                conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
+
+            if insert is not None:
+                batch_list.append(msg)
+
             print(msg)
             print()
 
-            batch_list.append(insert_data)
-            time.sleep(1)
-
+            time.sleep(3)
 
 
 

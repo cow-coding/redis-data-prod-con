@@ -1,5 +1,6 @@
 import json
 import os, sys
+
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import re
 import time
@@ -43,7 +44,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    with open("../"+os.getenv("SETTINGS")) as f:
+    with open("../" + os.getenv("SETTINGS")) as f:
         settings = yaml.load(f, Loader=yaml.FullLoader)
 
     token_list = settings["token"]
@@ -67,7 +68,7 @@ if __name__ == '__main__':
     url_list = []
 
     for repo in repo_list:
-		rid = repo["rid"]
+        rid = repo["rid"]
         login = repo["login"]
         repo_name = repo["repo_name"]
         star_pages = 10 if repo["star_pages"] > 10 else repo["star_pages"]
@@ -79,30 +80,31 @@ if __name__ == '__main__':
 
     url_idx = 0
     uid_list = []
-    user_dict = dict()
-	insert_dict = dict()
-	update_dict = dict()
+    data_dict = dict()
+    insert_dict = dict()
+    update_dict = dict()
 
     while url_idx < len(url_list):
         rid, url = url_list[url_idx]
 
         try:
             data = get_repo_user_list(url, headers)
-            
+
             for user in data:
-		update_dict["rid"] = rid
-		update_dict["uid"] = user["id"]
-				
-		if user["id"] not in uid_list:
-		    insert_dict["uid"] = user["id"]
-		    insert_dict["login"] = user["login"]
-		else:
-		    insert_dict = None
+                update_dict["rid"] = rid
+                update_dict["uid"] = user["id"]
 
-		    data_dict["update"] = update_dict
-		    data_dict["insert"] = insert_dict
+                if user["id"] not in uid_list:
+                    insert_dict["uid"] = user["id"]
+                    insert_dict["login"] = user["login"]
+                    uid_list.append(user["id"])
+                else:
+                    insert_dict = None
 
-                insert_data = json.dumps(user_dict)
+                data_dict["insert"] = insert_dict
+                data_dict["update"] = update_dict
+
+                insert_data = json.dumps(data_dict)
                 uid_list.append(user["id"])
                 q.put(insert_data)
 
@@ -118,15 +120,6 @@ if __name__ == '__main__':
                 token_idx += 1
                 token_idx = token_idx % len(token_list)
                 token = token_list[token_idx]
-                headers["Authorization"] = "token "+token
+                headers["Authorization"] = "token " + token
             elif httperr.response.status_code == 404:
                 url_idx += 1
-
-
-
-
-
-
-
-
-
