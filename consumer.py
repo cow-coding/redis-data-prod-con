@@ -43,7 +43,7 @@ if __name__ == '__main__':
     db_profile = settings["db_profile"]
 
     conn = db_connect(**db_profile)
-	conn_repo = conn["repository"]
+    conn_repo = conn["repository"]
     conn = conn[args.collection]
 
     global batch_list
@@ -59,13 +59,13 @@ if __name__ == '__main__':
 
         if msg is not None:
             msg = json.loads(msg)
-			insert_data = msg["insert"]
-			update_data = msg["update"]
+	    insert_data = msg["insert"]
+	    update_data = msg["update"]
 			
-			if "update" in msg:
-				rid = update_data["rid"]
-				uid = update_data["uid"]
-				conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
+	    if "update" in msg:
+		rid = update_data["rid"]
+		uid = update_data["uid"]
+		conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
 			
             print(msg)
             print()
