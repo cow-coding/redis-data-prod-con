@@ -64,15 +64,17 @@ if __name__ == '__main__':
             update = msg["update"]
 
             if update:
+		print(update)
                 update_data = msg["update"]
                 rid = update_data["rid"]
                 uid = update_data["uid"]
                 conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
 
             if insert:
+		print(insert)
                 batch_list.append(insert)
 
-            print(f"{msg} | insert time : {datetime.now()}")
+            print(f"time : {datetime.now()}")
             print()
 
 
