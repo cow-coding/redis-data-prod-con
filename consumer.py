@@ -30,7 +30,7 @@ def insert_data(conn):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--time_interval", type=int, default=9)
+    parser.add_argument("--time_interval", type=int, default=3)
     parser.add_argument("--collection", type=str, default="test")
 
     args = parser.parse_args()
@@ -68,12 +68,10 @@ if __name__ == '__main__':
                 conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
 
             if insert:
+                print(insert)
                 batch_list.append(insert)
 
             print(msg)
             print()
-
-            time.sleep(2)
-
 
 
