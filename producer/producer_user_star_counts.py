@@ -98,6 +98,7 @@ if __name__ == '__main__':
             print(f"[{user_idx:>8}|{len(user_list)}] ({user_idx/len(user_list)*100}%)")
             print(f"{insert_data} - insert time: {datetime.now()}")
             print()
+            user_idx += 1
         except requests.exceptions.HTTPError as httperr:
             if httperr.response.status_code == 403:
                 if token_count >= len(token_list):
