@@ -1,6 +1,7 @@
 import os
 import json
 import time
+from datetime import datetime
 
 import argparse
 
@@ -60,18 +61,18 @@ if __name__ == '__main__':
         if msg is not None:
             msg = json.loads(msg)
             insert = msg["insert"]
+            update = msg["update"]
 
-            if "update" in msg:
+            if update:
                 update_data = msg["update"]
                 rid = update_data["rid"]
                 uid = update_data["uid"]
                 conn_repo.update_one({"rid": rid}, {"$push": {"star_user_list": uid}})
 
             if insert:
-                print(insert)
                 batch_list.append(insert)
 
-            print(msg)
+            print(f"{msg} | insert time : {datetime.now()}")
             print()
 
 
